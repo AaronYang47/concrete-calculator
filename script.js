@@ -519,7 +519,7 @@ function calculateAll() {
     const underSlabPolyArea = calculateUnderSlabPolyArea(slabArea);
     setResult('area_under_slab_poly', underSlabPolyArea, false, true);
     document.getElementById('area_under_slab_poly_calculation').innerHTML = 
-        `<span class="calculation-step formula">A(ss) = A(slab) + 6% Lap Factor</span>
+        `<span class="calculation-step formula">A(sp) = A(slab) + 6% Lap Factor</span>
          <span class="calculation-step">= ${formatValue(slabArea, false, true)} × 1.06</span>
          <span class="calculation-step result">= ${formatValue(underSlabPolyArea, false, true)}</span>`;
 
