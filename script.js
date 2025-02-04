@@ -126,16 +126,30 @@ function calculateAnchorBolts(perimeter, boltsPerCorner, boltsPerOpening, numOpe
         metersToDecimalFeet(perimeter) : perimeter;
     
     // Calculate base number of bolts (3 bolts per 16' length)
-    const baseNumBolts = Math.ceil(perimeterInFeet / 16) * 3;
+    const numSections = Math.ceil(perimeterInFeet / 16);
+    const baseNumBolts = numSections * 3;
     document.getElementById('base_bolts').textContent = baseNumBolts;
+    document.getElementById('base_bolts_calculation').innerHTML = 
+        `<span class="calculation-step formula">Base Bolts = Ceiling(P(fn) ÷ 16') × 3</span>
+         <span class="calculation-step">= Ceiling(${perimeterInFeet.toFixed(2)}' ÷ 16') × 3</span>
+         <span class="calculation-step">= ${numSections} × 3</span>
+         <span class="calculation-step result">= ${baseNumBolts} bolts</span>`;
     
     // Calculate corner bolts
-    const cornerBolts = numCorners * boltsPerCorner;
+    const cornerBolts = num_corners * bolts_per_corner;
     document.getElementById('corner_bolts').textContent = cornerBolts;
+    document.getElementById('corner_bolts_calculation').innerHTML = 
+        `<span class="calculation-step formula">Corner Bolts = Number of Corners × Bolts Per Corner</span>
+         <span class="calculation-step">= ${num_corners} × ${bolts_per_corner}</span>
+         <span class="calculation-step result">= ${cornerBolts}</span>`;
     
     // Calculate opening bolts
-    const openingBolts = numOpenings * boltsPerOpening;
+    const openingBolts = num_openings * bolts_per_opening;
     document.getElementById('opening_bolts').textContent = openingBolts;
+    document.getElementById('opening_bolts_calculation').innerHTML = 
+        `<span class="calculation-step formula">Opening Bolts = Number of Openings × Bolts Per Opening</span>
+         <span class="calculation-step">= ${num_openings} × ${bolts_per_opening}</span>
+         <span class="calculation-step result">= ${openingBolts}</span>`;
     
     return baseNumBolts + cornerBolts + openingBolts;
 }
