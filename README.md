@@ -56,7 +56,7 @@ A web-based calculator for various concrete construction parameters.
 
 ## Live Demo
 
-Visit [GitHub Pages Link] to use the calculator.
+Visit [https://aaronyang47.github.io/concrete-calculator/](https://aaronyang47.github.io/concrete-calculator/) to use the calculator.
 
 ## Local Setup
 
