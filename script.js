@@ -126,13 +126,13 @@ function calculateAnchorBolts(perimeter, boltsPerCorner, boltsPerOpening, numOpe
         metersToDecimalFeet(perimeter) : perimeter;
     
     // Calculate base number of bolts (3 bolts per 16' length)
-    const numSections = Math.ceil(perimeterInFeet / 16);
-    const baseNumBolts = numSections * 3;
+    const rawBolts = (perimeterInFeet / 16) * 3;
+    const baseNumBolts = Math.ceil(rawBolts);
     document.getElementById('base_bolts').textContent = baseNumBolts;
     document.getElementById('base_bolts_calculation').innerHTML = 
-        `<span class="calculation-step formula">Base Bolts = Ceiling(P(fn) ÷ 16') × 3</span>
-         <span class="calculation-step">= Ceiling(${perimeterInFeet.toFixed(2)}' ÷ 16') × 3</span>
-         <span class="calculation-step">= ${numSections} × 3</span>
+        `<span class="calculation-step formula">Base Bolts = Ceiling(P(fn) ÷ 16' × 3)</span>
+         <span class="calculation-step">= Ceiling(${perimeterInFeet.toFixed(2)}' ÷ 16' × 3)</span>
+         <span class="calculation-step">= Ceiling(${rawBolts.toFixed(2)})</span>
          <span class="calculation-step result">= ${baseNumBolts} bolts</span>`;
     
     // Calculate corner bolts
