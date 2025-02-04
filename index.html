@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete Volume Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Concrete Volume Calculator</h1>
+
+        <div class="unit-selection">
+            <label>Select Unit System:</label>
+            <select id="unit-system" onchange="changeUnitSystem()">
+                <option value="metric">Metric (m)</option>
+                <option value="imperial">Imperial (ft-in)</option>
+            </select>
+        </div>
+        
+        <div class="calculation-section">
+            <h2>Foundation</h2>
+            <div class="formula">
+                Foundation Perimeter Formula: P(fn) = 2L(fn) + 2W(fn)
+            </div>
+            <div class="formula">
+                Foundation Centerline Perimeter Formula: CLP(fn) = P(fn) - 4T(fn)
+            </div>
+            <div class="formula">
+                Foundation Concrete Volume Formula: V(fn) = CLP(fn) × T(fn) × H(fn)
+            </div>
+            <div class="input-group imperial-input">
+                <label for="length_fn">Foundation Length L(fn):</label>
+                <input type="number" id="length_fn_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="length_fn_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="length_fn" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group imperial-input">
+                <label for="width_fn">Foundation Width W(fn):</label>
+                <input type="number" id="width_fn_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="width_fn_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="width_fn" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group imperial-input">
+                <label for="thickness_fn">Foundation Thickness T(fn):</label>
+                <input type="number" id="thickness_fn_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="thickness_fn_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="thickness_fn" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group imperial-input">
+                <label for="height_fn">Foundation Height H(fn):</label>
+                <input type="number" id="height_fn_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="height_fn_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="height_fn" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Foundation Perimeter P(fn):</span>
+                    <div class="result-value">
+                        <span id="perimeter_fn">0</span>
+                        <span class="unit-label metric">m</span>
+                        <span class="unit-label imperial">ft</span>
+                        <span id="perimeter_fn_imperial" class="imperial-result"></span>
+                    </div>
+                    <div class="calculation-steps">
+                        <span id="perimeter_calculation">P(fn) = 2 × L(fn) + 2 × W(fn) = 2 × 0 + 2 × 0 = 0</span>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <span>Foundation Centerline Perimeter CLP(fn):</span>
+                    <div class="result-value">
+                        <span id="centerline_perimeter">0</span>
+                        <span class="unit-label metric">m</span>
+                        <span class="unit-label imperial">ft</span>
+                        <span id="centerline_perimeter_imperial" class="imperial-result"></span>
+                    </div>
+                    <div class="calculation-steps">
+                        <span id="centerline_calculation">CLP(fn) = P(fn) - 4 × T(fn) = 0 - 4 × 0 = 0</span>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <span>Foundation Concrete Volume V(fn):</span>
+                    <div class="result-value">
+                        <span id="volume_fn">0</span>
+                        <span class="unit-label metric">m³</span>
+                        <span class="unit-label imperial">ft³</span>
+                        <span id="volume_fn_imperial" class="imperial-result"></span>
+                    </div>
+                    <div class="calculation-steps">
+                        <span id="foundation_volume_calculation">V(fn) = CLP(fn) × T(fn) × H(fn) = 0 × 0 × 0 = 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Strip Footing</h2>
+            <div class="formula">
+                Strip Footing Volume Formula: V(sf) = CLP(fn) × W(sf) × H(sf)
+            </div>
+            <div class="input-group imperial-input">
+                <label for="width_sf">Strip Footing Width W(sf):</label>
+                <input type="number" id="width_sf_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="width_sf_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="width_sf" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group imperial-input">
+                <label for="height_sf">Strip Footing Height H(sf):</label>
+                <input type="number" id="height_sf_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="height_sf_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="height_sf" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Strip Footing Concrete Volume V(sf):</span>
+                    <div class="result-value">
+                        <span id="volume_sf">0</span>
+                        <span class="unit-label metric">m³</span>
+                        <span class="unit-label imperial">ft³</span>
+                        <span id="volume_sf_imperial" class="imperial-result"></span>
+                    </div>
+                    <div class="calculation-steps">
+                        <span id="strip_footing_calculation">V(sf) = CLP(fn) × W(sf) × H(sf) = 0 × 0 × 0 = 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Pad Footing</h2>
+            <div class="formula">
+                Pad Footing Volume Formula: V(pf) = W(pf) × L(pf) × H(pf) × # of pad footings
+            </div>
+            <div class="input-group imperial-input">
+                <label for="width_pf">Pad Footing Width W(pf):</label>
+                <input type="number" id="width_pf_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="width_pf_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="width_pf" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group imperial-input">
+                <label for="length_pf">Pad Footing Length L(pf):</label>
+                <input type="number" id="length_pf_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="length_pf_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="length_pf" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group imperial-input">
+                <label for="height_pf">Pad Footing Height H(pf):</label>
+                <input type="number" id="height_pf_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="height_pf_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="height_pf" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group">
+                <label for="num_pf">Number of Pad Footings:</label>
+                <input type="number" id="num_pf" step="1" min="0">
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Pad Footing Concrete Volume V(pf):</span>
+                    <div class="result-value">
+                        <span id="volume_pf">0</span>
+                        <span class="unit-label metric">m³</span>
+                        <span class="unit-label imperial">ft³</span>
+                        <span id="volume_pf_imperial" class="imperial-result"></span>
+                    </div>
+                    <div class="calculation-steps">
+                        <span id="pad_footing_calculation">V(pf) = W(pf) × L(pf) × H(pf) × # = 0 × 0 × 0 × 0 = 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="formula total-formula">
+            Total Footing Volume Formula: V(fts) = V(sf) + V(pf)
+        </div>
+
+        <div class="total-results">
+            <div class="result-item total">
+                <span>Total Footing Concrete Volume V(fts):</span>
+                <div class="result-value">
+                    <span id="volume_total">0.00</span>
+                    <span class="unit-label metric">m³</span>
+                    <span class="unit-label imperial">ft³</span>
+                </div>
+            </div>
+        </div>
+        <div id="total_volume_calculation" class="calculation-steps"></div>
+
+        <div class="additional-calculations">
+            <div class="calculation-section">
+                <h2>Anchor Bolts</h2>
+                <div class="formula">
+                    Number of Anchor Bolts = [P(fn) ÷ 16' Length × 3 Bolts Per Length] + [x] Per Corner × Number of Corners + [x] Per Opening × Number of Openings
+                </div>
+                <div class="input-group">
+                    <label for="num_corners">Number of Corners:</label>
+                    <input type="number" id="num_corners" step="1" min="0" value="4">
+                </div>
+                <div class="input-group">
+                    <label for="bolts_per_corner">Bolts Per Corner:</label>
+                    <input type="number" id="bolts_per_corner" step="1" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="num_openings">Number of Openings:</label>
+                    <input type="number" id="num_openings" step="1" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="bolts_per_opening">Bolts Per Opening:</label>
+                    <input type="number" id="bolts_per_opening" step="1" min="0">
+                </div>
+                <div class="section-results">
+                    <div class="result-item">
+                        <span>Base Number of Bolts (3 per 16'):</span>
+                        <div class="result-value">
+                            <span id="base_bolts">0</span>
+                            <span> bolts</span>
+                        </div>
+                        <div class="calculation-steps">
+                            <span id="base_bolts_calculation">Base Bolts = P(fn) ÷ 16' × 3 = 0 ÷ 16 × 3 = 0</span>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span>Corner Bolts:</span>
+                        <div class="result-value">
+                            <span id="corner_bolts">0</span>
+                            <span> bolts</span>
+                        </div>
+                        <div class="calculation-steps">
+                            <span id="corner_bolts_calculation">Corner Bolts = Number of Corners × Bolts Per Corner = 4 × 0 = 0</span>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span>Opening Bolts:</span>
+                        <div class="result-value">
+                            <span id="opening_bolts">0</span>
+                            <span> bolts</span>
+                        </div>
+                        <div class="calculation-steps">
+                            <span id="opening_bolts_calculation">Opening Bolts = Number of Openings × Bolts Per Opening = 0 × 0 = 0</span>
+                        </div>
+                    </div>
+                    <div class="result-item total">
+                        <span>Total Number of Anchor Bolts:</span>
+                        <div class="result-value">
+                            <span id="total_bolts">0</span>
+                            <span> bolts</span>
+                        </div>
+                        <div class="calculation-steps">
+                            <span id="total_bolts_calculation">Total Bolts = Base Bolts + Corner Bolts + Opening Bolts = 0 + 0 + 0 = 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculation-section">
+                <h2>Parging</h2>
+                <div class="formula">
+                    Parging Area A(pg) = P(fn) × H (above grade)
+                </div>
+                <div class="input-group imperial-input">
+                    <label for="height_above_grade">Height Above Grade:</label>
+                    <input type="number" id="height_above_grade_ft" class="imperial" step="1" placeholder="ft">
+                    <input type="number" id="height_above_grade_in" class="imperial" step="0.125" placeholder="in">
+                    <input type="number" id="height_above_grade" class="metric" step="0.01">
+                    <span class="unit-label metric">m</span>
+                    <span class="unit-label imperial">ft-in</span>
+                </div>
+                <div class="section-results">
+                    <div class="result-item">
+                        <span>Parging Area A(pg):</span>
+                        <div class="result-value">
+                            <span id="parging_area">0</span>
+                            <span class="unit-label metric">m²</span>
+                            <span class="unit-label imperial">ft²</span>
+                            <span id="parging_area_imperial" class="imperial-result"></span>
+                        </div>
+                        <div class="calculation-steps">
+                            <span id="parging_calculation">A(pg) = P(fn) × H(above grade) = 0 × 0 = 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculation-section">
+                <h2>Foundation Drainage Layer</h2>
+                <div class="formula">
+                    Drainage Layer Area A(dl) = P(fn) × H (below grade)
+                </div>
+                <div class="input-group imperial-input">
+                    <label for="height_below_grade">Height Below Grade:</label>
+                    <input type="number" id="height_below_grade_ft" class="imperial" step="1" placeholder="ft">
+                    <input type="number" id="height_below_grade_in" class="imperial" step="0.125" placeholder="in">
+                    <input type="number" id="height_below_grade" class="metric" step="0.01">
+                    <span class="unit-label metric">m</span>
+                    <span class="unit-label imperial">ft-in</span>
+                </div>
+                <div class="section-results">
+                    <div class="result-item">
+                        <span>Drainage Layer Area A(dl):</span>
+                        <div class="result-value">
+                            <span id="drainage_area">0</span>
+                            <span class="unit-label metric">m²</span>
+                            <span class="unit-label imperial">ft²</span>
+                            <span id="drainage_area_imperial" class="imperial-result"></span>
+                        </div>
+                        <div class="calculation-steps">
+                            <span id="drainage_calculation">A(dl) = P(fn) × H(below grade) = 0 × 0 = 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Weeping Tile Length</h2>
+            <div class="formula">
+                Weeping Tile Length Formula: CLP(weep) = P(fn) + 8 × [Footing Projection + Gap + 1/2 Tile Diameter]
+            </div>
+            <div class="input-group imperial-input">
+                <label for="footing_projection">Footing Projection:</label>
+                <input type="number" id="footing_projection_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="footing_projection_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="footing_projection" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group imperial-input">
+                <label for="gap">Gap:</label>
+                <input type="number" id="gap_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="gap_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="gap" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="input-group imperial-input">
+                <label for="half_tile_diameter">1/2 Tile Diameter:</label>
+                <input type="number" id="half_tile_diameter_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="half_tile_diameter_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="half_tile_diameter" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Weeping Tile Length CLP(weep):</span>
+                    <div class="result-value">
+                        <span id="weeping_length">0</span>
+                        <span class="unit-label metric">m</span>
+                        <span class="unit-label imperial">ft</span>
+                    </div>
+                    <div id="weeping_length_calculation" class="calculation-steps"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Clear Stone Tile Cover</h2>
+            <div class="formula">
+                Clear Stone Height Formula: H(sc) = 2 × (1/2 Tile Diameter) + 3/4 Clear Stone (min. 6")
+            </div>
+            <div class="formula">
+                Clear Stone Volume Formula: V(stc) = CLP(weep) × H(sc) × H(sc)
+            </div>
+            <div class="input-group imperial-input">
+                <label for="clear_stone">3/4 Clear Stone (min. 6"):</label>
+                <input type="number" id="clear_stone_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="clear_stone_in" class="imperial" step="0.125" placeholder="in" min="6">
+                <input type="number" id="clear_stone" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Clear Stone Height H(sc):</span>
+                    <div class="result-value">
+                        <span id="stone_height">0</span>
+                        <span class="unit-label metric">m</span>
+                        <span class="unit-label imperial">ft</span>
+                    </div>
+                    <div id="stone_height_calculation" class="calculation-steps"></div>
+                </div>
+                <div class="result-item">
+                    <span>Clear Stone Volume V(stc):</span>
+                    <div class="result-value">
+                        <span id="stone_volume">0</span>
+                        <span class="unit-label metric">m³</span>
+                        <span class="unit-label imperial">ft³</span>
+                    </div>
+                    <div id="stone_volume_calculation" class="calculation-steps"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Geotextile Filter Material</h2>
+            <div class="formula">
+                Geotextile Area Formula: A(geo) = CLP(weep) × [H(sc) + H(sc)]
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Geotextile Area A(geo):</span>
+                    <div class="result-value">
+                        <span id="geotextile_area">0</span>
+                        <span class="unit-label metric">m²</span>
+                        <span class="unit-label imperial">ft²</span>
+                    </div>
+                    <div id="geotextile_calculation" class="calculation-steps"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Area of the Slab</h2>
+            <div class="formula">
+                Area of the Slab Formula: A(slab) = A(house) - A(top of wall)
+            </div>
+            <div class="formula">
+                House Area Formula: A(house) = Σ A(sections)
+            </div>
+            <div class="formula">
+                Top of Wall Area Formula: A(top of wall) = CLP(fn) × T(fn)
+            </div>
+            
+            <div class="input-group">
+                <label for="num_sections">Number of Sections:</label>
+                <select id="num_sections" onchange="updateSections()">
+                    <option value="0">Select number of sections</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+
+            <div id="sections_container">
+                <!-- Sections will be dynamically added here -->
+            </div>
+
+            <div class="section-results">
+                <div class="result-item">
+                    <span>House Area A(house):</span>
+                    <div class="result-value">
+                        <span id="house_area">0</span>
+                        <span class="unit-label metric">m²</span>
+                        <span class="unit-label imperial">ft²</span>
+                    </div>
+                    <div id="house_area_calculation" class="calculation-steps"></div>
+                </div>
+                <div class="result-item">
+                    <span>Top of Wall Area A(top of wall):</span>
+                    <div class="result-value">
+                        <span id="top_wall_area">0</span>
+                        <span class="unit-label metric">m²</span>
+                        <span class="unit-label imperial">ft²</span>
+                    </div>
+                    <div id="top_wall_area_calculation" class="calculation-steps"></div>
+                </div>
+                <div class="result-item">
+                    <span>Area of the Slab A(slab):</span>
+                    <div class="result-value">
+                        <span id="slab_area">0</span>
+                        <span class="unit-label metric">m²</span>
+                        <span class="unit-label imperial">ft²</span>
+                    </div>
+                    <div id="slab_area_calculation" class="calculation-steps"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Slab Volume</h2>
+            <div class="formula">
+                Slab Volume Formula: V(slab) = A(slab) × Slab Thickness
+            </div>
+            <div class="input-group imperial-input">
+                <label for="slab_thickness">Slab Thickness:</label>
+                <input type="number" id="slab_thickness_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="slab_thickness_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="slab_thickness" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Slab Volume V(slab):</span>
+                    <div class="result-value">
+                        <span id="slab_volume">0</span>
+                        <span class="unit-label metric">m³</span>
+                        <span class="unit-label imperial">ft³</span>
+                    </div>
+                    <div id="slab_volume_calculation" class="calculation-steps"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Volume Under Slab</h2>
+            <div class="formula">
+                Area Under Slab Formula: A(uss) = A(slab)
+            </div>
+            <div class="formula">
+                Volume Under Slab Formula: V(uss) = A(slab) × Footing Thickness
+            </div>
+            <div class="input-group imperial-input">
+                <label for="footing_thickness">Footing Thickness:</label>
+                <input type="number" id="footing_thickness_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="footing_thickness_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="footing_thickness" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Area Under Slab A(uss):</span>
+                    <div class="result-value">
+                        <span id="area_under_slab">0</span>
+                        <span class="unit-label metric">m²</span>
+                        <span class="unit-label imperial">ft²</span>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <span>Volume Under Slab V(uss):</span>
+                    <div class="result-value">
+                        <span id="volume_under_slab">0</span>
+                        <span class="unit-label metric">m³</span>
+                        <span class="unit-label imperial">ft³</span>
+                    </div>
+                    <div id="volume_under_slab_calculation" class="calculation-steps"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Area of Under Slab Poly</h2>
+            <div class="formula">
+                Area of Under Slab Poly Formula: A(ss) = A(slab) + 6% Lap Factor
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Area of Under Slab Poly A(ss):</span>
+                    <div class="result-value">
+                        <span id="area_under_slab_poly">0</span>
+                        <span class="unit-label metric">m²</span>
+                        <span class="unit-label imperial">ft²</span>
+                    </div>
+                    <div id="area_under_slab_poly_calculation" class="calculation-steps"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Slab WWM</h2>
+            <div class="formula">
+                Slab WWM Formula: A(wwm) = A(slab) + 6% Lap Factor
+            </div>
+            <div class="section-results">
+                <div class="result-item">
+                    <span>Slab WWM A(wwm):</span>
+                    <div class="result-value">
+                        <span id="slab_wwm">0</span>
+                        <span class="unit-label metric">m²</span>
+                        <span class="unit-label imperial">ft²</span>
+                    </div>
+                    <div id="slab_wwm_calculation" class="calculation-steps"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

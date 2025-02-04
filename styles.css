@@ -1,0 +1,246 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.unit-selection {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.unit-selection select {
+    padding: 8px 15px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.unit-selection select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.calculation-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.formula {
+    background-color: #e8f5e9;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    color: #2e7d32;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    border-left: 4px solid #4CAF50;
+}
+
+.total-formula {
+    background-color: #e8f5e9;
+    padding: 10px 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    color: #2e7d32;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    border-left: 4px solid #4CAF50;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.input-group.imperial-input input.imperial {
+    width: 80px;
+    margin-right: 5px;
+}
+
+.input-group input.metric {
+    width: 120px;
+}
+
+label {
+    width: 200px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+}
+
+.unit-label {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.section-results {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f7f0;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+}
+
+.total-results {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #e8f5e9;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.result-value {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.imperial-result {
+    color: #666;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item.total {
+    font-weight: bold;
+    color: #2e7d32;
+    font-size: 1.1em;
+}
+
+/* Hide imperial inputs and labels by default */
+.imperial {
+    display: none;
+}
+
+/* Show imperial inputs and labels when imperial system is selected */
+body.imperial-system .imperial {
+    display: inline-block;
+}
+
+body.imperial-system .metric {
+    display: none;
+}
+
+.additional-calculations {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px dashed #4CAF50;
+}
+
+.calculation-steps {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+.calculation-step {
+    display: block;
+    margin: 5px 0;
+    color: #495057;
+}
+
+.calculation-step.formula {
+    color: #0056b3;
+    font-weight: bold;
+}
+
+.calculation-step.result {
+    color: #28a745;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    label {
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .formula {
+        font-size: 0.8em;
+        padding: 8px 12px;
+    }
+
+    .input-group.imperial-input {
+        flex-wrap: wrap;
+    }
+
+    .input-group.imperial-input input.imperial {
+        width: calc(50% - 10px);
+    }
+} 
+} 
