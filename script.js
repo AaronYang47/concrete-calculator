@@ -118,23 +118,35 @@ function calculatePerimeter() {
     const perimeter = totalLength + totalWidth;
     
     // Format calculation steps
-    let calculationSteps = 'P(fn) = ΣL + ΣW';
-    if (lengthCalculations.length > 0) {
-        calculationSteps += `\n= (${lengthCalculations.join(' + ')})`;
-        if (widthCalculations.length > 0) {
-            calculationSteps += ` + (${widthCalculations.join(' + ')})`;
+    let calculationSteps = '<span class="calculation-step formula">P(fn) = ΣL + ΣW</span>';
+    if (lengthCalculations.length > 0 || widthCalculations.length > 0) {
+        let calcStep = '= ';
+        if (lengthCalculations.length > 0) {
+            calcStep += `(${lengthCalculations.join(' + ')})`;
         }
-        calculationSteps += `\n= ${formatValue(totalLength)}`;
         if (widthCalculations.length > 0) {
-            calculationSteps += ` + ${formatValue(totalWidth)}`;
+            if (lengthCalculations.length > 0) {
+                calcStep += ' + ';
+            }
+            calcStep += `(${widthCalculations.join(' + ')})`;
         }
-        calculationSteps += `\n= ${formatValue(perimeter)}`;
+        calculationSteps += `<span class="calculation-step">${calcStep}</span>`;
+
+        let resultStep = '= ';
+        if (lengthCalculations.length > 0) {
+            resultStep += formatValue(totalLength);
+        }
+        if (widthCalculations.length > 0) {
+            if (lengthCalculations.length > 0) {
+                resultStep += ' + ';
+            }
+            resultStep += formatValue(totalWidth);
+        }
+        calculationSteps += `<span class="calculation-step">${resultStep}</span>`;
+        calculationSteps += `<span class="calculation-step result">= ${formatValue(perimeter)}</span>`;
     }
 
-    document.getElementById('perimeter_calculation').innerHTML = 
-        calculationSteps.split('\n').map(step => 
-            `<span class="calculation-step">${step}</span>`
-        ).join('');
+    document.getElementById('perimeter_calculation').innerHTML = calculationSteps;
 
     return perimeter;
 }
