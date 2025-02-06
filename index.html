@@ -21,7 +21,7 @@
         <div class="calculation-section">
             <h2>Foundation</h2>
             <div class="formula">
-                Foundation Perimeter Formula: P(fn) = 2L(fn) + 2W(fn)
+                Foundation Perimeter Formula: P(fn) = ΣL + ΣW
             </div>
             <div class="formula">
                 Foundation Centerline Perimeter Formula: CLP(fn) = P(fn) - 4T(fn)
@@ -29,22 +29,39 @@
             <div class="formula">
                 Foundation Concrete Volume Formula: V(fn) = CLP(fn) × T(fn) × H(fn)
             </div>
-            <div class="input-group imperial-input">
-                <label for="length_fn">Foundation Length L(fn):</label>
-                <input type="number" id="length_fn_ft" class="imperial" step="1" placeholder="ft">
-                <input type="number" id="length_fn_in" class="imperial" step="0.125" placeholder="in">
-                <input type="number" id="length_fn" class="metric" step="0.01">
-                <span class="unit-label metric">m</span>
-                <span class="unit-label imperial">ft-in</span>
+            
+            <div class="input-group">
+                <label for="num_lengths">Number of Length Segments:</label>
+                <select id="num_lengths" onchange="updateFoundationInputs()">
+                    <option value="0">Select number of lengths</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             </div>
-            <div class="input-group imperial-input">
-                <label for="width_fn">Foundation Width W(fn):</label>
-                <input type="number" id="width_fn_ft" class="imperial" step="1" placeholder="ft">
-                <input type="number" id="width_fn_in" class="imperial" step="0.125" placeholder="in">
-                <input type="number" id="width_fn" class="metric" step="0.01">
-                <span class="unit-label metric">m</span>
-                <span class="unit-label imperial">ft-in</span>
+
+            <div class="input-group">
+                <label for="num_widths">Number of Width Segments:</label>
+                <select id="num_widths" onchange="updateFoundationInputs()">
+                    <option value="0">Select number of widths</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             </div>
+
+            <div id="foundation_lengths_container">
+                <!-- Length inputs will be dynamically added here -->
+            </div>
+
+            <div id="foundation_widths_container">
+                <!-- Width inputs will be dynamically added here -->
+            </div>
+
             <div class="input-group imperial-input">
                 <label for="thickness_fn">Foundation Thickness T(fn):</label>
                 <input type="number" id="thickness_fn_ft" class="imperial" step="1" placeholder="ft">
@@ -71,7 +88,7 @@
                         <span id="perimeter_fn_imperial" class="imperial-result"></span>
                     </div>
                     <div class="calculation-steps">
-                        <span id="perimeter_calculation">P(fn) = 2 × L(fn) + 2 × W(fn) = 2 × 0 + 2 × 0 = 0</span>
+                        <span id="perimeter_calculation">P(fn) = ΣL + ΣW = 0</span>
                     </div>
                 </div>
                 <div class="result-item">

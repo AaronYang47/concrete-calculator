@@ -95,8 +95,48 @@ function changeUnitSystem() {
 }
 
 // Calculate foundation perimeter
-function calculatePerimeter(length, width) {
-    return 2 * length + 2 * width;
+function calculatePerimeter() {
+    const numLengths = parseInt(document.getElementById('num_lengths').value) || 0;
+    const numWidths = parseInt(document.getElementById('num_widths').value) || 0;
+    
+    let totalLength = 0;
+    let lengthCalculations = [];
+    for (let i = 1; i <= numLengths; i++) {
+        const length = getInputValue(`length_fn_${i}`);
+        totalLength += length;
+        lengthCalculations.push(formatValue(length));
+    }
+
+    let totalWidth = 0;
+    let widthCalculations = [];
+    for (let i = 1; i <= numWidths; i++) {
+        const width = getInputValue(`width_fn_${i}`);
+        totalWidth += width;
+        widthCalculations.push(formatValue(width));
+    }
+
+    const perimeter = totalLength + totalWidth;
+    
+    // Format calculation steps
+    let calculationSteps = 'P(fn) = ΣL + ΣW';
+    if (lengthCalculations.length > 0) {
+        calculationSteps += `\n= (${lengthCalculations.join(' + ')})`;
+        if (widthCalculations.length > 0) {
+            calculationSteps += ` + (${widthCalculations.join(' + ')})`;
+        }
+        calculationSteps += `\n= ${formatValue(totalLength)}`;
+        if (widthCalculations.length > 0) {
+            calculationSteps += ` + ${formatValue(totalWidth)}`;
+        }
+        calculationSteps += `\n= ${formatValue(perimeter)}`;
+    }
+
+    document.getElementById('perimeter_calculation').innerHTML = 
+        calculationSteps.split('\n').map(step => 
+            `<span class="calculation-step">${step}</span>`
+        ).join('');
+
+    return perimeter;
 }
 
 // Calculate foundation centerline perimeter
@@ -307,8 +347,6 @@ function calculateAll() {
     const isImperial = unitSystem === 'imperial';
 
     // Get all input values
-    const length_fn = getInputValue('length_fn');
-    const width_fn = getInputValue('width_fn');
     const thickness_fn = getInputValue('thickness_fn');
     const height_fn = getInputValue('height_fn');
     const width_sf = getInputValue('width_sf');
@@ -336,12 +374,8 @@ function calculateAll() {
     const footing_thickness = getInputValue('footing_thickness');
 
     // Calculate foundation perimeter
-    const perimeter = calculatePerimeter(length_fn, width_fn);
+    const perimeter = calculatePerimeter();
     setResult('perimeter_fn', perimeter);
-    document.getElementById('perimeter_calculation').innerHTML = 
-        `<span class="calculation-step formula">P(fn) = 2 × L(fn) + 2 × W(fn)</span>
-         <span class="calculation-step">= 2 × ${formatValue(length_fn)} + 2 × ${formatValue(width_fn)}</span>
-         <span class="calculation-step result">= ${formatValue(perimeter)}</span>`;
 
     // Calculate foundation centerline perimeter
     const centerlinePerimeter = calculateCenterlinePerimeter(perimeter, thickness_fn);
@@ -541,7 +575,60 @@ inputs.forEach(input => {
 // Add event listener for section updates
 document.getElementById('num_sections').addEventListener('change', updateSections);
 
+// Function to update foundation inputs
+function updateFoundationInputs() {
+    const numLengths = parseInt(document.getElementById('num_lengths').value) || 0;
+    const numWidths = parseInt(document.getElementById('num_widths').value) || 0;
+    
+    // Update lengths container
+    const lengthsContainer = document.getElementById('foundation_lengths_container');
+    lengthsContainer.innerHTML = '';
+    for (let i = 1; i <= numLengths; i++) {
+        const lengthDiv = document.createElement('div');
+        lengthDiv.className = 'input-group imperial-input';
+        lengthDiv.innerHTML = `
+            <label>Length ${i}:</label>
+            <input type="number" id="length_fn_${i}_ft" class="imperial" step="1" placeholder="ft">
+            <input type="number" id="length_fn_${i}_in" class="imperial" step="0.125" placeholder="in">
+            <input type="number" id="length_fn_${i}" class="metric" step="0.01">
+            <span class="unit-label metric">m</span>
+            <span class="unit-label imperial">ft-in</span>
+        `;
+        lengthsContainer.appendChild(lengthDiv);
+    }
+
+    // Update widths container
+    const widthsContainer = document.getElementById('foundation_widths_container');
+    widthsContainer.innerHTML = '';
+    for (let i = 1; i <= numWidths; i++) {
+        const widthDiv = document.createElement('div');
+        widthDiv.className = 'input-group imperial-input';
+        widthDiv.innerHTML = `
+            <label>Width ${i}:</label>
+            <input type="number" id="width_fn_${i}_ft" class="imperial" step="1" placeholder="ft">
+            <input type="number" id="width_fn_${i}_in" class="imperial" step="0.125" placeholder="in">
+            <input type="number" id="width_fn_${i}" class="metric" step="0.01">
+            <span class="unit-label metric">m</span>
+            <span class="unit-label imperial">ft-in</span>
+        `;
+        widthsContainer.appendChild(widthDiv);
+    }
+
+    // Add event listeners to new inputs
+    const newInputs = document.querySelectorAll('#foundation_lengths_container input, #foundation_widths_container input');
+    newInputs.forEach(input => {
+        input.addEventListener('input', calculateAll);
+    });
+
+    calculateAll();
+}
+
 // Initialize the calculator
 document.addEventListener('DOMContentLoaded', () => {
+    // Add event listeners for foundation segment selects
+    document.getElementById('num_lengths').addEventListener('change', updateFoundationInputs);
+    document.getElementById('num_widths').addEventListener('change', updateFoundationInputs);
+    
+    // Initialize unit system
     changeUnitSystem();
 }); 
