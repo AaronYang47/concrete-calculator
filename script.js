@@ -153,7 +153,8 @@ function calculatePerimeter() {
 
 // Calculate foundation centerline perimeter
 function calculateCenterlinePerimeter(perimeter, thickness) {
-    return perimeter - 4 * thickness;
+    const corners = parseInt(document.getElementById('corners_fn').value) || 4;
+    return perimeter - corners * thickness;
 }
 
 // Calculate foundation concrete volume
@@ -367,7 +368,7 @@ function calculateAll() {
     const length_pf = getInputValue('length_pf');
     const height_pf = getInputValue('height_pf');
     const num_pf = parseInt(document.getElementById('num_pf').value) || 0;
-    const num_corners = parseInt(document.getElementById('num_corners').value) || 4;
+    const num_corners = parseInt(document.getElementById('corners_fn').value) || 4;
     const bolts_per_corner = parseInt(document.getElementById('bolts_per_corner').value) || 0;
     const bolts_per_opening = parseInt(document.getElementById('bolts_per_opening').value) || 0;
     const num_openings = parseInt(document.getElementById('num_openings').value) || 0;
@@ -390,12 +391,22 @@ function calculateAll() {
     setResult('perimeter_fn', perimeter);
 
     // Calculate foundation centerline perimeter
-    const centerlinePerimeter = calculateCenterlinePerimeter(perimeter, thickness_fn);
+    let centerlinePerimeter = calculateCenterlinePerimeter(perimeter, thickness_fn);
+    
+    // Check for manual CLP input
+    const manualCLP = getInputValue('manual_clp');
+    if (manualCLP > 0) {
+        centerlinePerimeter = manualCLP;
+        document.getElementById('centerline_calculation').innerHTML = 
+            `<span class="calculation-step formula">Using manually input CLP(fn)</span>
+             <span class="calculation-step result">= ${formatValue(centerlinePerimeter)}</span>`;
+    } else {
+        document.getElementById('centerline_calculation').innerHTML = 
+            `<span class="calculation-step formula">CLP(fn) = P(fn) - Corners × T(fn)</span>
+             <span class="calculation-step">= ${formatValue(perimeter)} - ${num_corners} × ${formatValue(thickness_fn)}</span>
+             <span class="calculation-step result">= ${formatValue(centerlinePerimeter)}</span>`;
+    }
     setResult('centerline_perimeter', centerlinePerimeter);
-    document.getElementById('centerline_calculation').innerHTML = 
-        `<span class="calculation-step formula">CLP(fn) = P(fn) - 4 × T(fn)</span>
-         <span class="calculation-step">= ${formatValue(perimeter)} - 4 × ${formatValue(thickness_fn)}</span>
-         <span class="calculation-step result">= ${formatValue(centerlinePerimeter)}</span>`;
 
     // Calculate foundation concrete volume
     const foundationVolume = calculateFoundationVolume(centerlinePerimeter, thickness_fn, height_fn);
@@ -643,4 +654,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize unit system
     changeUnitSystem();
+    
+    // Add event listener for corners input
+    document.getElementById('corners_fn').addEventListener('input', calculateAll);
+
+    // Add event listeners for manual CLP inputs
+    const manualCLPInputs = ['manual_clp', 'manual_clp_ft', 'manual_clp_in'];
+    manualCLPInputs.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.addEventListener('input', calculateAll);
+        }
+    });
 }); 

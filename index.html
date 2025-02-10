@@ -24,7 +24,7 @@
                 Foundation Perimeter Formula: P(fn) = ΣL + ΣW
             </div>
             <div class="formula">
-                Foundation Centerline Perimeter Formula: CLP(fn) = P(fn) - 4T(fn)
+                Foundation Centerline Perimeter Formula: CLP(fn) = P(fn) - Corners × T(fn)
             </div>
             <div class="formula">
                 Foundation Concrete Volume Formula: V(fn) = CLP(fn) × T(fn) × H(fn)
@@ -88,6 +88,10 @@
                 <span class="unit-label metric">m</span>
                 <span class="unit-label imperial">ft-in</span>
             </div>
+            <div class="input-group">
+                <label for="corners_fn">Number of Foundation Corners:</label>
+                <input type="number" id="corners_fn" step="1" min="0" value="4">
+            </div>
             <div class="section-results">
                 <div class="result-item">
                     <span>Foundation Perimeter P(fn):</span>
@@ -110,7 +114,7 @@
                         <span id="centerline_perimeter_imperial" class="imperial-result"></span>
                     </div>
                     <div class="calculation-steps">
-                        <span id="centerline_calculation">CLP(fn) = P(fn) - 4 × T(fn) = 0 - 4 × 0 = 0</span>
+                        <span id="centerline_calculation">CLP(fn) = P(fn) - Corners × T(fn) = 0 - 4 × 0 = 0</span>
                     </div>
                 </div>
                 <div class="result-item">
@@ -125,6 +129,21 @@
                         <span id="foundation_volume_calculation">V(fn) = CLP(fn) × T(fn) × H(fn) = 0 × 0 × 0 = 0</span>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="calculation-section">
+            <h2>Manual CLP Input</h2>
+            <div class="formula">
+                Manual input will override the calculated CLP(fn)
+            </div>
+            <div class="input-group imperial-input">
+                <label for="manual_clp">Manual CLP(fn):</label>
+                <input type="number" id="manual_clp_ft" class="imperial" step="1" placeholder="ft">
+                <input type="number" id="manual_clp_in" class="imperial" step="0.125" placeholder="in">
+                <input type="number" id="manual_clp" class="metric" step="0.01">
+                <span class="unit-label metric">m</span>
+                <span class="unit-label imperial">ft-in</span>
             </div>
         </div>
 
