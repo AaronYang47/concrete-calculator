@@ -69,6 +69,12 @@ h2 {
     border-left: 4px solid #4CAF50;
 }
 
+.formula.warning {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border-left: 4px solid #d32f2f;
+}
+
 .total-formula {
     background-color: #e8f5e9;
     padding: 10px 15px;
